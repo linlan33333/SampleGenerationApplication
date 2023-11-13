@@ -2,9 +2,29 @@
 const routes = [
   {
     path: '/',
+    redirect: '/data-management/image-management'
+  },
+
+  {
+    path: '/data-management',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
+      {
+        path: 'image-management',
+        name: 'imageManagement',
+        component: () => import('pages/data-management/image-management/index.vue')
+        // component: () => import('pages/IndexPage.vue')
+      },
+      {
+        path: 'audio-management',
+        name: 'audioManagement',
+        component: () => import('pages/IndexPage.vue')
+      },
+      {
+        path: 'text-management',
+        name: 'textManagement',
+        component: () => import('pages/IndexPage.vue')
+      },
     ]
   },
 
