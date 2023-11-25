@@ -91,7 +91,7 @@
             <q-icon name="developer_board" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>仿真模型</q-item-label>
+            <q-item-label class="text-subtitle1">仿真模型</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
