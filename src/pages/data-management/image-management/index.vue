@@ -1,17 +1,19 @@
 <template>
   <q-page class="col-sm-8 col-md-9 col-lg-9">
-    <management-part @mgPartSelectedImg="getSelectedImgUrl" />
+    <management-part @imgPartSelectedImg="getSelectedImgUrl" :afterModifyFolder="afterModifyFolder"
+                     :renameImgData="renameImgData" />
   </q-page>
 
   <q-page class="col-sm-4 col-md-3 col-lg-3">
-    <display-part :imgUrl="selectedImgUrl" />
+    <display-part :imgUrl="selectedImgUrl" :imgFolder="beforeModifyFolder"
+                  @afterModifyFolder="getAfterModifyFolder" @renameImgData="getRenameImgData" />
   </q-page>
 </template>
 
 <script>
 import ManagementPart from "src/pages/data-management/image-management/management-part/index.vue"
 import DisplayPart from "src/pages/data-management/image-management/display-part/index.vue"
-import { ref } from 'vue';
+import { ref, provide } from 'vue';
 
 export default {
   name: "ImageManagement",
@@ -21,14 +23,37 @@ export default {
     DisplayPart
   },
 
+  emits: [
+    "afterModifyFolder",
+    "imgPartSelectedImg",
+    "renameImgData"
+  ],
+
   setup() {
     const selectedImgUrl = ref(null);
+    const beforeModifyFolder = ref(null);
+    const afterModifyFolder = ref(null);    // display-part组件进行移动文件、重命名文件等操作后修改之后的imgFolder会传过来
+    const renameImgData = ref(null);        // 从display-part组件传过来的文件夹重命名的数据
+
+    provide("afterModifyFolder", afterModifyFolder.value);
 
     return {
       selectedImgUrl,
+      beforeModifyFolder,
+      afterModifyFolder,
+      renameImgData,
 
-      getSelectedImgUrl(data) {
-        selectedImgUrl.value = data;
+      getSelectedImgUrl(imgUrl, folder) {
+        selectedImgUrl.value = imgUrl;
+        beforeModifyFolder.value = folder;
+      },
+
+      getAfterModifyFolder(data) {
+        afterModifyFolder.value = data;
+      },
+
+      getRenameImgData(data) {
+        renameImgData.value = data;
       }
     }
   }

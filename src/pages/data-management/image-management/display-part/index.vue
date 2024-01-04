@@ -10,7 +10,8 @@
   </div>
 
   <div class="q-pt-sm full-height">
-    <ImageInfo :imgUrl="url" />
+    <ImageInfo :imgUrl="url" :beforeModifyFolder="beforeModifyFolder"
+                @afterModifyFolder="getAfterModifyFolder" @renameImgData="getRenameImgData" />
   </div>
 </template>
 
@@ -30,19 +31,43 @@ export default {
     ImageInfo
   },
 
-  props: ["imgUrl"],
+  props: [
+    "imgUrl",
+    "imgFolder",    // 修改前的图片文件夹数组
+  ],
+
+  emits: [
+    "afterModifyFolder",
+    "renameImgData"
+  ],
 
   setup() {
-    const url = ref(null);
-
+    const url = ref(null);                  // 当前选中的图片url
+    const emit = getCurrentInstance().emit;
     const props = getCurrentInstance().props;
 
-    watch(() => {
+    const beforeModifyFolder = ref(null);   // 修改前的图片文件夹
+
+    watch(() => props.imgUrl, () => {
       url.value = props.imgUrl;
+    })
+
+    // 走不到这一步
+    watch(() => props.imgFolder, () => {
+      beforeModifyFolder.value = props.imgFolder;
     })
 
     return {
       url,
+      beforeModifyFolder,
+
+      getAfterModifyFolder(data) {
+        emit('afterModifyFolder', data);
+      },
+
+      getRenameImgData(data) {
+        emit("renameImgData", data);
+      }
     }
   }
 }

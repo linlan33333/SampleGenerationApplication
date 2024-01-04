@@ -17,7 +17,7 @@ export default {
     const imageUrl = ref(null);
     const props = getCurrentInstance().props;
 
-    watch(() => {
+    watch(() => props.imgUrl, () => {
       imageUrl.value = props.imgUrl;
     })
 

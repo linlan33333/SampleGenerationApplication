@@ -14,9 +14,22 @@ import { createStore } from 'vuex'
 
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
-    modules: {
-      // example
+    // modules: {
+    //   // example
+    // },
+    state: {
+      imgFolders: null,   // 所有被管理的图片文件夹的数据
+      selectedImgUrl: null,   // 所选的图片url，用于展示在display-part组件上
     },
+    mutations: {
+      setImgFolder(state, value) {
+        state.imgFolder = value;
+      },
+      setSelectedImgUrl(state, value) {
+        state.selectedImgUrl = value;
+      }
+    },
+
 
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
