@@ -1,9 +1,14 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import path from 'path'
 import os from 'os'
 
 // needed in case process is undefined under Linux
 const platform = process.platform || os.platform()
+
+// 1、使用remote，为了能让渲染进程中也能使用remote，请按照这三步走，剩下两步在下面
+// 参考博客https://www.jianshu.com/p/7ed27f343e81
+const remote = require("@electron/remote/main");
+remote.initialize();
 
 let mainWindow
 
@@ -19,14 +24,20 @@ function createWindow () {
     webPreferences: {
       contextIsolation: false,    // 打通主进程与渲染进程要开启的选项，这样就可以在vue文件中使用node.js的能力了
       nodeIntegration: true,      // 打通主进程与渲染进程要开启的选项，这样就可以在vue文件中使用node.js的能力了
+      enableRemoteModule:true,    // 2、开启允许渲染进程使用remote选项
       // More info: https://v2.quasar.dev/quasar-cli-vite/developing-electron-apps/electron-preload-script
       preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
       // sandbox: false
       webSecurity: false          // 读取并加载用户本地图片时要开启的选项
-    }
+    },
+    // autoHideMenuBar: true
   })
 
   mainWindow.loadURL(process.env.APP_URL)
+
+  // 3、启用remote模块，渲染进程就可以使用remote模块了
+  // 这样就可以在渲染进程中使用dialog功能了
+  remote.enable(mainWindow.webContents);
 
   if (process.env.DEBUGGING) {
     // if on DEV or Production with debug enabled
@@ -60,3 +71,6 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+const { dialog } = require('electron');
+dialog.showOpenDialog({ properties: ['openDirectory'] });
