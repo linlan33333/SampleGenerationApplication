@@ -16,6 +16,7 @@
     "axios": "^1.2.1",
     "fs-extra": "^11.2.0",
     "image-size": "^1.0.2",
+    "mitt": "^3.0.1",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
     "vue-draggable-next": "^2.2.1",
