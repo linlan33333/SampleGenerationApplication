@@ -69,18 +69,67 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable
-                v-ripple
-                :active="this.$route.name === 'bbb'"
-                active-class="my-menu-link"
-                to="">
-          <q-item-section avatar>
-            <q-icon name="playlist_add" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label class="text-subtitle1">样本生成</q-item-label>
-          </q-item-section>
-        </q-item>
+<!--        <q-item clickable-->
+<!--                v-ripple-->
+<!--                :active="this.$route.name === 'bbb'"-->
+<!--                active-class="my-menu-link"-->
+<!--                to="">-->
+<!--          <q-item-section avatar>-->
+<!--            <q-icon name="playlist_add" />-->
+<!--          </q-item-section>-->
+<!--          <q-item-section>-->
+<!--            <q-item-label class="text-subtitle1">样本生成</q-item-label>-->
+<!--          </q-item-section>-->
+        <q-expansion-item icon="storage"
+                          label="数据增广"
+                          header-class="text-subtitle1"
+                          :header-style="expansionHeaderStyle"
+                          default-opened>
+          <q-item clickable
+                  v-ripple="{ color: 'grey'}"
+                  :active="this.$route.name === 'imageAugment'"
+                  active-class="my-menu-link"
+                  class="q-mt-sm"
+                  to="/data-augment/image-augment">
+            <q-item-section avatar />
+            <q-item-section>
+              <q-item-label class="text-subtitle1 text-white">图像增广</q-item-label>
+            </q-item-section>
+            <q-item-section avatar side>
+              <q-icon name="playlist_add" />
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable
+                  v-ripple="{ color: 'grey'}"
+                  :active="this.$route.name === 'audioAugment'"
+                  active-class="my-menu-link"
+                  class="q-mt-sm"
+                  to="/data-augment/audio-augment">
+            <q-item-section avatar />
+            <q-item-section>
+              <q-item-label class="text-subtitle1 text-white">音频增广</q-item-label>
+            </q-item-section>
+            <q-item-section avatar side>
+              <q-icon name="graphic_eq" />
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable
+                  v-ripple="{ color: 'grey'}"
+                  :active="this.$route.name === 'textAugment'"
+                  active-class="my-menu-link"
+                  class="q-mt-sm"
+                  to="/data-augment/text-augment">
+            <q-item-section avatar />
+            <q-item-section>
+              <q-item-label class="text-subtitle1 text-white">文本增广</q-item-label>
+            </q-item-section>
+            <q-item-section avatar side>
+              <q-icon name="subject" />
+            </q-item-section>
+          </q-item>
+        </q-expansion-item>
 
         <q-item clickable
                 v-ripple

@@ -344,7 +344,7 @@ export default {
 .image-item
   width: calc(20% - 8px)
   margin-bottom: 20px
-  //aspect-ratio: 1
+//aspect-ratio: 1
 
 .clickable-img
   cursor: pointer
