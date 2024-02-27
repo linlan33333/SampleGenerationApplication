@@ -56,7 +56,8 @@
 <script>
 import { ref, onMounted, watch, getCurrentInstance, onBeforeUnmount } from 'vue';
 import bus from "src/utils/bus";
-import { PYTESTIMAGEPATH, TEMPPATH } from "src/utils/global-args";
+import { useQuasar } from "quasar";
+import { PYTESTIMAGEPATH, TEMPPATH, anacondaEnvPath } from "src/utils/global-args";
 
 export default {
   name: "ImageList",
@@ -65,6 +66,7 @@ export default {
     const fs = require('fs');
     const props = getCurrentInstance().props;
     const spawn = require('child_process').spawn;
+    const $q = useQuasar();
 
     const imgFolder = ref([]);      // 工作目录下的所有文件夹以及里面的图片信息都会存放到这里
     const urlTemp = ref(PYTESTIMAGEPATH);
@@ -105,13 +107,35 @@ export default {
 
     onMounted(() => {
       bus.on('imageAugment', params => {
-        console.log(params);
+        const notif = $q.notify({
+          group: false,
+          timeout: 0,   // 一直显示
+          spinner: true,
+          message: '处理中，请勿执行其他操作...',
+        })
         // 先将选中的图片全部拷贝到temp文件夹下
+        for (let imgUrl of selectedImages.value) {
+          // 先给图片名称起名，将原图片的路径作为新图片的名称，以此保留原图片的信息
+          let newName = imgUrl.replace(/\//g, '#');   // 将原图片路径的\替换成#，不然无法作为文件名
+          newName = newName.replace(':', '@');        // 将原图片路径的:替换成@，不然无法作为文件名
+          let newImgUrl = TEMPPATH + newName;
+          fs.copyFileSync(imgUrl, newImgUrl);
+        }
 
-        const py = spawn('python', params);
+        const py = spawn(anacondaEnvPath, params);
+
+        // 界面跳转
+
         py.stdout.on('data', function (data) {
+          notif({
+            icon: 'done',
+            spinner: false,
+            message: '文件处理已完成',
+            timeout: 2000 // 2秒后该提示框自动消失
+          })
           console.log("翻转已完成");
         })
+
         py.stderr.on('data', res => {
           let data = res.toString();
           console.log(data);
