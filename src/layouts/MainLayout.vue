@@ -102,10 +102,10 @@
 
           <q-item clickable
                   v-ripple="{ color: 'grey'}"
-                  :active="this.$route.name === 'audioAugment'"
+                  :active="this.$route.name === 'augmentResult'"
                   active-class="my-menu-link"
                   class="q-mt-sm"
-                  to="/data-augment/audio-augment">
+                  to="/data-augment/augment-result">
             <q-item-section avatar />
             <q-item-section>
               <q-item-label class="text-subtitle1 text-white">音频增广</q-item-label>

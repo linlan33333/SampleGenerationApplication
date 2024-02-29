@@ -7,12 +7,8 @@
 </template>
 
 <script>
-import { ref, getCurrentInstance, watch } from 'vue';
-import { useQuasar } from 'quasar';
-import { FOLDERPATH } from "src/utils/global-args";
-
 export default {
-  name: "ToolBar2",
+  name: "ImageAugToolBar",
 
   setup() {
 

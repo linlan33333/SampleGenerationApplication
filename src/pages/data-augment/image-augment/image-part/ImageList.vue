@@ -116,7 +116,7 @@ export default {
         // 先将选中的图片全部拷贝到temp文件夹下
         for (let imgUrl of selectedImages.value) {
           // 先给图片名称起名，将原图片的路径作为新图片的名称，以此保留原图片的信息
-          let newName = imgUrl.replace(/\//g, '#');   // 将原图片路径的\替换成#，不然无法作为文件名
+          let newName = imgUrl.replace(/\//g, '^');   // 将原图片路径的\替换成#，不然无法作为文件名
           newName = newName.replace(':', '@');        // 将原图片路径的:替换成@，不然无法作为文件名
           let newImgUrl = TEMPPATH + newName;
           fs.copyFileSync(imgUrl, newImgUrl);
@@ -133,18 +133,30 @@ export default {
             message: '文件处理已完成',
             timeout: 2000 // 2秒后该提示框自动消失
           })
-          console.log("翻转已完成");
+
         })
 
         py.stderr.on('data', res => {
+          notif({
+            icon: 'error',
+            spinner: false,
+            message: '文件处理失败，请重试',
+            timeout: 2000 // 2秒后该提示框自动消失
+          })
+          console.log(params);
           let data = res.toString();
           console.log(data);
         })
+      })
+
+      bus.on('cancelSelect', () => {
+        selectedImages.value = [];
       })
     })
 
     onBeforeUnmount(() => {
       bus.off('imageAugment');
+      bus.off('cancelSelect');
     })
 
     return {

@@ -11,9 +11,13 @@
     </q-card>
   </q-expansion-item>
 
-  <div class="column q-pt-lg-lg">
+  <div class="column q-pt-md q-pl-md q-pr-md">
     <div>
       <q-btn class="full-width q-dark" flat label="确定" @click="imageRotate" />
+    </div>
+
+    <div class="q-pt-sm">
+      <q-btn class="full-width q-dark" flat label="取消" @click="cancelSelect" />
     </div>
   </div>
 </template>
@@ -37,15 +41,12 @@ export default {
       angle,
 
       imageRotate() {
-        const params = [PYFUNCTESTPATH + 'imageRotate.py', '-input_folder', TEMPPATH + 'input1', '-angle', angle.value, '-output_folder', TEMPPATH];
-        // const py = spawn('python',[PYFUNCTESTPATH + 'imageRotate.py', '-input_folder', PYTESTIMAGEPATH + 'input', '-angle', angle.value, '-output_folder', PYTESTIMAGEPATH + 'output']);
-        //
-        // py.stdout.on('data', function (data) {
-        //   console.log("翻转已完成");
-        //   emit("finishOperation", true);
-        // })
-
+        const params = [PYFUNCTESTPATH + 'imageRotate.py', '-input_folder', TEMPPATH, '-angle', angle.value, '-output_folder', TEMPPATH];
         bus.emit('imageAugment', params);
+      },
+
+      cancelSelect() {
+        bus.emit('cancelSelect', true);
       }
     }
   }

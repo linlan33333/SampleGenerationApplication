@@ -48,6 +48,11 @@ const routes = [
         name: 'textAugment',
         component: () => import('pages/IndexPage.vue')
       },
+      {
+        path: 'augment-result',
+        name: 'augmentResult',
+        component: () => import ('pages/data-augment/augment-result/index.vue')
+      }
     ]
   },
 
