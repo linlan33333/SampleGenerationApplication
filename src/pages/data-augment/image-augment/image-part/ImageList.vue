@@ -55,6 +55,7 @@
 
 <script>
 import { ref, onMounted, watch, getCurrentInstance, onBeforeUnmount } from 'vue';
+import { useRouter } from "vue-router";
 import bus from "src/utils/bus";
 import { useQuasar } from "quasar";
 import { PYTESTIMAGEPATH, TEMPPATH, anacondaEnvPath } from "src/utils/global-args";
@@ -67,6 +68,7 @@ export default {
     const props = getCurrentInstance().props;
     const spawn = require('child_process').spawn;
     const $q = useQuasar();
+    const router = useRouter();
 
     const imgFolder = ref([]);      // 工作目录下的所有文件夹以及里面的图片信息都会存放到这里
     const urlTemp = ref(PYTESTIMAGEPATH);
@@ -133,7 +135,7 @@ export default {
             message: '文件处理已完成',
             timeout: 2000 // 2秒后该提示框自动消失
           })
-
+          router.push('/data-augment/augment-result');
         })
 
         py.stderr.on('data', res => {

@@ -1,5 +1,7 @@
 <template>
   <q-toolbar inset>
+    <q-btn round flat icon="keyboard_backspace" color="white" @click="giveUpAugment" />
+
     <q-toolbar-title>
       增强结果
     </q-toolbar-title>
@@ -28,13 +30,17 @@
 
 <script>
 import {ref} from "vue";
+import { useRouter } from "vue-router";
 import bus from "src/utils/bus";
+import {TEMPPATH} from "src/utils/global-args";
 
 export default {
   name: "AugResToolBar",
 
   setup() {
     const multiSelect = ref(false);
+    const router = useRouter();
+    const fs = require('fs-extra');
 
     return {
       multiSelect,
@@ -47,6 +53,14 @@ export default {
       cancelSelectMultiFiles() {
         multiSelect.value = false;
         bus.emit('cancelSelectMultiFiles', multiSelect.value);
+      },
+
+      /**
+       * 返回上一界面则清空temp文件夹里的全部内容
+       */
+      giveUpAugment() {
+        fs.emptyDir(TEMPPATH);
+        router.back();
       }
     }
   },
