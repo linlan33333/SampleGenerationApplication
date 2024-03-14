@@ -25,6 +25,8 @@
 import {onMounted, ref, getCurrentInstance, onBeforeUnmount} from "vue";
 import bus from "src/utils/bus";
 import { TEMPPATH } from "src/utils/global-args";
+import { useQuasar } from "quasar";
+import fs from "fs";
 
 export default {
   name: "AugmentResult",
@@ -33,7 +35,9 @@ export default {
     // temp文件夹下的所有图片都会放到这里
     const filesInfo = ref([]);
     const fs = require('fs');
+    const { dialog } = require('@electron/remote');
     const emit = getCurrentInstance().emit;
+    const $q = useQuasar();
 
     const multiSelect = ref(false);
     const selectedImages = ref([]);
@@ -77,11 +81,82 @@ export default {
         multiSelect.value = params;
         selectedImages.value = [];
       })
+
+      bus.on('batchSaveFiles', params => {
+        if (selectedImages.value.length !== 0) {
+          // 覆盖原文件
+          for (let file of selectedImages.value) {
+            fs.copyFile(file.fileCurrentUrl, file.fileOriginUrl, (err) => {
+              if (err) {
+                $q.notify({
+                  message: "文件保存失败",
+                  position: "top",
+                  type: "negative"
+                });
+                console.log(err);
+              }
+              else {
+                $q.notify({
+                  type: "positive",
+                  message: "文件替换保存成功",
+                  position: "top",
+                  color: "grey-14"
+                });
+              }
+            })
+          }
+        }
+        else {
+          $q.notify({
+            message: "未选择文件",
+            position: "top",
+            type: "negative"
+          })
+        }
+      })
+
+      bus.on('saveMultiFileAs', params => {
+        dialog.showOpenDialog({
+          // 这里可以设置默认的文件名或文件类型过滤等
+          properties: ['openDirectory'],
+        }).then(res => {
+          if (!res.canceled && res.filePaths) {
+            // 用户没有取消且选择了文件路径，写入文件
+            console.log(res.filePaths);
+            for (let file of selectedImages.value) {
+              fs.copyFile(file.fileCurrentUrl, res.filePaths[0] + '\\' + file.fileName, (err) => {
+                if (err) {
+                  $q.notify({
+                    message: "文件" + file.fileName + "保存失败",
+                    position: "top",
+                    type: "negative"
+                  });
+                  console.log(err);
+                }
+              })
+            }
+            $q.notify({
+              type: "positive",
+              message: "文件批量保存成功",
+              position: "top",
+              color: "grey-14"
+            })
+          }
+        }).catch(err => {
+          $q.notify({
+            message: "文件批量保存失败",
+            position: "top",
+            type: "negative"
+          });
+        })
+      })
     })
 
     onBeforeUnmount(() => {
       bus.off('selectMultiFiles');
       bus.off('cancelSelectMultiFiles');
+      bus.off('batchSaveFiles');
+      bus.off('saveMultiFileAs');
     })
 
     return {

@@ -1,10 +1,10 @@
 <template>
-  <q-page class="col-sm-8 col-md-9 col-lg-9">
+  <q-page :class="{'col-sm-8 col-md-9 col-lg-9': show, 'col-11': !show}">
     <management-part @imgPartSelectedImg="getSelectedImgUrl" :afterModifyFolder="afterModifyFolder"
                      :renameImgData="renameImgData" />
   </q-page>
 
-  <q-page class="col-sm-4 col-md-3 col-lg-3">
+  <q-page class="col-sm-4 col-md-3 col-lg-3" v-show="show">
     <display-part :imgUrl="selectedImgUrl" :imgFolder="beforeModifyFolder"
                   @afterModifyFolder="getAfterModifyFolder" @renameImgData="getRenameImgData" />
   </q-page>
@@ -34,6 +34,7 @@ export default {
     const beforeModifyFolder = ref(null);
     const afterModifyFolder = ref(null);    // display-part组件进行移动文件、重命名文件等操作后修改之后的imgFolder会传过来
     const renameImgData = ref(null);        // 从display-part组件传过来的文件夹重命名的数据
+    const show = ref(false);
 
     provide("afterModifyFolder", afterModifyFolder.value);
 
@@ -42,10 +43,12 @@ export default {
       beforeModifyFolder,
       afterModifyFolder,
       renameImgData,
+      show,
 
       getSelectedImgUrl(imgUrl, folder) {
         selectedImgUrl.value = imgUrl;
         beforeModifyFolder.value = folder;
+        show.value = true;
       },
 
       getAfterModifyFolder(data) {

@@ -19,9 +19,14 @@
           取消
         </div>
       </q-btn>
-      <q-btn flat padding="xs md" @click="">
+      <q-btn flat padding="xs md" @click="batchSave">
         <div class="text-subtitle1 ">
           批量保存
+        </div>
+      </q-btn>
+      <q-btn flat padding="xs md" @click="saveAs">
+        <div class="text-subtitle1 ">
+          另存为
         </div>
       </q-btn>
     </div>
@@ -61,6 +66,14 @@ export default {
       giveUpAugment() {
         fs.emptyDir(TEMPPATH);
         router.back();
+      },
+
+      batchSave() {
+        bus.emit('batchSaveFiles', true);
+      },
+
+      saveAs() {
+        bus.emit('saveMultiFileAs', true);
       }
     }
   },
