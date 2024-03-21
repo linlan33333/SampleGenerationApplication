@@ -58,7 +58,7 @@ import { ref, onMounted, watch, getCurrentInstance, onBeforeUnmount } from 'vue'
 import { useRouter } from "vue-router";
 import bus from "src/utils/bus";
 import { useQuasar } from "quasar";
-import { PYTESTIMAGEPATH, TEMPPATH, anacondaEnvPath } from "src/utils/global-args";
+import { PYTESTIMAGEPATH, TEMPPATH, anacondaEnvPath, SGAImageEnvPath } from "src/utils/global-args";
 
 export default {
   name: "ImageList",
@@ -124,11 +124,12 @@ export default {
           fs.copyFileSync(imgUrl, newImgUrl);
         }
 
-        const py = spawn(anacondaEnvPath, params);
+        const py = spawn(SGAImageEnvPath, params);
+        console.log(params);
 
         // 界面跳转
 
-        py.stdout.on('data', function (data) {
+        py.stdout.on('data', data => {
           notif({
             icon: 'done',
             spinner: false,
@@ -138,16 +139,13 @@ export default {
           router.push('/data-augment/augment-result');
         })
 
-        py.stderr.on('data', res => {
+        py.stderr.on('data', err => {
           notif({
             icon: 'error',
             spinner: false,
             message: '文件处理失败，请重试',
             timeout: 2000 // 2秒后该提示框自动消失
           })
-          console.log(params);
-          let data = res.toString();
-          console.log(data);
         })
       })
 

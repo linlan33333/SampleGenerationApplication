@@ -13,5 +13,7 @@ const PYFUNCTESTPATH = "D:/AAAAA/文件/项目/智能应用增量样本生成软
 
 // anaconda环境中的python脚本
 const anacondaEnvPath = 'D:/Anaconda/envs/pytorch/python';
+// anaconda环境中专为图像处理安装的环境
+const SGAImageEnvPath = 'D:/Anaconda/envs/SGAImage/python';
 
-export { FOLDERPATH, PYTESTIMAGEPATH, PYFUNCTESTPATH, TEMPPATH, anacondaEnvPath };
+export { FOLDERPATH, PYTESTIMAGEPATH, PYFUNCTESTPATH, TEMPPATH, anacondaEnvPath, SGAImageEnvPath };
