@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import ImagePart from "pages/data-augment/image-augment/image-part/index.vue";
-import FunctionPart from "pages/data-augment/image-augment/function-part/index.vue";
+import ImagePart from "pages/data-clean/image-clean/image-part/index.vue";
+import FunctionPart from "pages/data-clean/image-clean/function-part/index.vue";
 
 import {ref} from 'vue';
 
 export default {
-  name: "ImageAugment",
+  name: "ImageClean",
 
   components: {
     ImagePart,

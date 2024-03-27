@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import ToolBar from "pages/data-augment/image-augment/function-part/ToolBar.vue";
-import FunctionList from "pages/data-augment/image-augment/function-part/FunctionList.vue";
+import ToolBar from "pages/data-clean/image-clean/function-part/ToolBar.vue";
+import FunctionList from "pages/data-clean/image-clean/function-part/FunctionList.vue";
 import {ref} from "vue";
 
 export default {

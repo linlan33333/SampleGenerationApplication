@@ -56,6 +56,18 @@ const routes = [
     ]
   },
 
+  {
+    path: '/data-clean',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: 'image-clean',
+        name: 'imageClean',
+        component: () => import('pages/data-clean/image-clean/index.vue')
+      }
+    ]
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {

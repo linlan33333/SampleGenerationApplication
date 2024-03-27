@@ -1,7 +1,7 @@
 <template>
   <div class="column full-width flex flex-center full-height">
     <div class="full-width">
-      <image-aug-tool-bar />
+      <image-clean-tool-bar />
     </div>
 
     <q-separator color="white" />
@@ -16,16 +16,16 @@
 </template>
 
 <script>
-import ImageAugToolBar from "pages/data-augment/image-augment/image-part/ToolBar.vue";
+import ImageCleanToolBar from "pages/data-clean/image-clean/image-part/ToolBar.vue";
 import ImageList from "pages/data-augment/image-augment/image-part/ImageList.vue";
-import { ref } from "vue";
 
+import {ref} from "vue";
 export default {
   name: "ImagePart",
 
   components: {
-    ImageAugToolBar,
-    ImageList
+    ImageList,
+    ImageCleanToolBar
   },
 
   setup() {

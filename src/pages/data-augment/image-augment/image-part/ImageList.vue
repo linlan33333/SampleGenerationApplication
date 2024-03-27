@@ -54,18 +54,17 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, getCurrentInstance, onBeforeUnmount } from 'vue';
+import { ref, onMounted, getCurrentInstance, onBeforeUnmount } from 'vue';
 import { useRouter } from "vue-router";
 import bus from "src/utils/bus";
 import { useQuasar } from "quasar";
-import { PYTESTIMAGEPATH, TEMPPATH, anacondaEnvPath, SGAImageEnvPath } from "src/utils/global-args";
+import { PYTESTIMAGEPATH, TEMPPATH, SGAImageEnvPath } from "src/utils/global-args";
 
 export default {
   name: "ImageList",
 
   setup() {
     const fs = require('fs');
-    const props = getCurrentInstance().props;
     const spawn = require('child_process').spawn;
     const $q = useQuasar();
     const router = useRouter();

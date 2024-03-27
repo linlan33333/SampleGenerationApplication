@@ -56,30 +56,57 @@
           </q-item>
         </q-expansion-item>
 
-        <q-item clickable
-                v-ripple="{ color: 'grey'}"
-                :active="this.$route.name === 'aaa'"
-                active-class="my-menu-link"
-                to="">
-          <q-item-section avatar>
-            <q-icon name="cleaning_services" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label class="text-subtitle1">数据清洗</q-item-label>
-          </q-item-section>
-        </q-item>
+        <q-expansion-item icon="cleaning_services"
+                          label="数据清洗"
+                          header-class="text-subtitle1"
+                          :header-style="expansionHeaderStyle"
+                          default-opened>
+          <q-item clickable
+                  v-ripple="{ color: 'grey'}"
+                  :active="this.$route.name === 'imageClean'"
+                  active-class="my-menu-link"
+                  class="q-mt-sm"
+                  to="/data-clean/image-clean">
+            <q-item-section avatar />
+            <q-item-section>
+              <q-item-label class="text-subtitle1 text-white">图像清洗</q-item-label>
+            </q-item-section>
+            <q-item-section avatar side>
+              <q-icon name="playlist_add" />
+            </q-item-section>
+          </q-item>
 
-<!--        <q-item clickable-->
-<!--                v-ripple-->
-<!--                :active="this.$route.name === 'bbb'"-->
-<!--                active-class="my-menu-link"-->
-<!--                to="">-->
-<!--          <q-item-section avatar>-->
-<!--            <q-icon name="playlist_add" />-->
-<!--          </q-item-section>-->
-<!--          <q-item-section>-->
-<!--            <q-item-label class="text-subtitle1">样本生成</q-item-label>-->
-<!--          </q-item-section>-->
+          <q-item clickable
+                  v-ripple="{ color: 'grey'}"
+                  :active="this.$route.name === 'augmentResult'"
+                  active-class="my-menu-link"
+                  class="q-mt-sm"
+                  to="/data-clean/clean-result">
+            <q-item-section avatar />
+            <q-item-section>
+              <q-item-label class="text-subtitle1 text-white">音频清洗</q-item-label>
+            </q-item-section>
+            <q-item-section avatar side>
+              <q-icon name="graphic_eq" />
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable
+                  v-ripple="{ color: 'grey'}"
+                  :active="this.$route.name === 'textAugment'"
+                  active-class="my-menu-link"
+                  class="q-mt-sm"
+                  to="/data-clean/text-clean">
+            <q-item-section avatar />
+            <q-item-section>
+              <q-item-label class="text-subtitle1 text-white">文本清洗</q-item-label>
+            </q-item-section>
+            <q-item-section avatar side>
+              <q-icon name="subject" />
+            </q-item-section>
+          </q-item>
+        </q-expansion-item>
+
         <q-expansion-item icon="storage"
                           label="数据增广"
                           header-class="text-subtitle1"
