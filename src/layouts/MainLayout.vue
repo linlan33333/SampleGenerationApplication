@@ -60,7 +60,7 @@
                           label="数据清洗"
                           header-class="text-subtitle1"
                           :header-style="expansionHeaderStyle"
-                          default-opened>
+                          >
           <q-item clickable
                   v-ripple="{ color: 'grey'}"
                   :active="this.$route.name === 'imageClean'"
@@ -81,7 +81,7 @@
                   :active="this.$route.name === 'augmentResult'"
                   active-class="my-menu-link"
                   class="q-mt-sm"
-                  to="/data-clean/clean-result">
+                  to="/data-clean/audio-clean">
             <q-item-section avatar />
             <q-item-section>
               <q-item-label class="text-subtitle1 text-white">音频清洗</q-item-label>
@@ -111,7 +111,7 @@
                           label="数据增广"
                           header-class="text-subtitle1"
                           :header-style="expansionHeaderStyle"
-                          default-opened>
+                          >
           <q-item clickable
                   v-ripple="{ color: 'grey'}"
                   :active="this.$route.name === 'imageAugment'"
@@ -129,10 +129,10 @@
 
           <q-item clickable
                   v-ripple="{ color: 'grey'}"
-                  :active="this.$route.name === 'augmentResult'"
+                  :active="this.$route.name === 'audioAugment'"
                   active-class="my-menu-link"
                   class="q-mt-sm"
-                  to="/data-augment/augment-result">
+                  to="/data-augment/audio-augment">
             <q-item-section avatar />
             <q-item-section>
               <q-item-label class="text-subtitle1 text-white">音频增广</q-item-label>

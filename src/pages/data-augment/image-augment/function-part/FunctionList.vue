@@ -6,7 +6,7 @@
     >
     <q-card>
       <q-card-section>
-        <q-select outlined dense color="grey-14" :options="[90, 180, 270]" v-model="angle" />
+        <q-select outlined dense label="请选择旋转角度" color="grey-14" :options="[90, 180, 270]" v-model="angle" />
       </q-card-section>
 
       <q-card-actions align="evenly">
@@ -77,7 +77,7 @@
   >
     <q-card>
       <q-card-section>
-        <q-select outlined dense color="grey-14" placeholder="请选择模糊类型" v-model="blur_type"
+        <q-select outlined dense color="grey-14" label="请选择模糊类型" v-model="blur_type"
                   :options="['average', 'gaussian', 'median']" />
       </q-card-section>
 
@@ -135,7 +135,7 @@
   >
     <q-card>
       <q-card-section>
-        <q-select outlined dense color="grey-14" placeholder="请选择转换风格" v-model="cycleGANName"
+        <q-select outlined dense color="grey-14" label="请选择转换风格" v-model="cycleGANName"
                   :options="['horse2zebra', 'monet2photo', 'summer2winter']" />
       </q-card-section>
 
@@ -153,7 +153,7 @@
   >
     <q-card>
       <q-card-section>
-        <q-select outlined dense color="grey-14" placeholder="请选择转换风格" v-model="Pix2PixName"
+        <q-select outlined dense color="grey-14" label="请选择转换风格" v-model="Pix2PixName"
                   :options="['sat2map', 'map2sat', 'day2night']" />
       </q-card-section>
 
@@ -172,9 +172,9 @@
 </template>
 
 <script>
-import {getCurrentInstance, ref} from "vue";
+import {ref} from "vue";
 import bus from "src/utils/bus";
-import {PYFUNCTESTPATH, PYTESTIMAGEPATH, TEMPPATH} from "src/utils/global-args";
+import {PYFUNCTESTPATH, TEMPPATH} from "src/utils/global-args";
 import {useQuasar} from "quasar";
 
 export default {

@@ -1,7 +1,7 @@
 <template>
   <q-banner class="full-width">
     <q-item-label class="text-subtitle1 text-center">
-      图片详情
+      增强函数
     </q-item-label>
   </q-banner>
 </template>
@@ -12,6 +12,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="sass">
 
 </style>

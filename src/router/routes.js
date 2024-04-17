@@ -18,7 +18,7 @@ const routes = [
       {
         path: 'audio-management',
         name: 'audioManagement',
-        component: () => import('pages/IndexPage.vue')
+        component: () => import('pages/data-management/audio-management/index.vue')
       },
       {
         path: 'text-management',
@@ -41,7 +41,7 @@ const routes = [
       {
         path: 'audio-augment',
         name: 'audioAugment',
-        component: () => import('pages/IndexPage.vue')
+        component: () => import('pages/data-augment/audio-augment/index.vue')
       },
       {
         path: 'text-augment',
@@ -64,6 +64,16 @@ const routes = [
         path: 'image-clean',
         name: 'imageClean',
         component: () => import('pages/data-clean/image-clean/index.vue')
+      },
+      {
+        path: 'audio-clean',
+        name: 'audioClean',
+        component: () => import('pages/IndexPage.vue')
+      },
+      {
+        path: 'text-clean',
+        name: 'textClean',
+        component: () => import('pages/IndexPage.vue')
       }
     ]
   },

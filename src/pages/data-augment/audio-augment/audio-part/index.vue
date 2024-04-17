@@ -1,7 +1,7 @@
 <template>
   <div class="column full-width flex flex-center full-height">
     <div class="full-width">
-      <image-clean-tool-bar />
+      <tool-bar />
     </div>
 
     <q-separator color="white" />
@@ -10,22 +10,20 @@
         而不是让整个窗口上下滚动，右边出现滚动条很难看 -->
     <!--  这个窗口的高度以后再改，能不能改成自适应的  -->
     <q-scroll-area :thumb-style="thumbStyle" class="scroll-area-height full-width">
-      <image-list />
+
     </q-scroll-area>
   </div>
 </template>
 
 <script>
-import ImageCleanToolBar from "pages/data-clean/image-clean/image-part/ToolBar.vue";
-import ImageList from "pages/data-clean/image-clean/image-part/ImageList.vue";
+import { ref } from "vue";
+import ToolBar from "pages/data-augment/audio-augment/audio-part/ToolBar.vue";
 
-import {ref} from "vue";
 export default {
-  name: "ImagePart",
+  name: "AudioPart",
 
   components: {
-    ImageList,
-    ImageCleanToolBar
+    ToolBar
   },
 
   setup() {
