@@ -14,11 +14,15 @@ const PYTESTIMAGEPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/imgF
 const PYFUNCTESTPATH = "D:/AAAAA/文件/项目/智能应用增量样本生成软件/算法与说明/图像数据增强20240114/代码/";
 // 图像数据清洗的函数路径
 const IMAGECLEANFUNCPATH = "D:/AAAAA/文件/项目/智能应用增量样本生成软件/算法与说明/数据清洗/"
-
+// 语音数据清洗的函数路径
+const AUDIOCLEANFUNCPATH = "D:/AAAAA/文件/项目/智能应用增量样本生成软件/算法与说明/AudioClean/VoiceDataCleaning/";
+// 语音数据增广的函数路径
+const AUDIOAUGMENTFUNCPATH = "D:/AAAAA/文件/项目/智能应用增量样本生成软件/算法与说明/audio-augmentation/";
 // anaconda环境中的python脚本
 const anacondaEnvPath = 'D:/Anaconda/envs/pytorch/python';
 // anaconda环境中专为图像处理安装的环境
 const SGAImageEnvPath = 'D:/Anaconda/envs/SGAImage/python';
+const SGAAudioEnvPath = 'D:/Anaconda/envs/SGAAudio/python';
 
 export { FOLDERPATH, PYTESTIMAGEPATH, PYFUNCTESTPATH, TEMPPATH, anacondaEnvPath, SGAImageEnvPath,
-         IMAGECLEANFUNCPATH, AUDIOFOLDERPATH };
+         IMAGECLEANFUNCPATH, AUDIOFOLDERPATH, SGAAudioEnvPath, AUDIOCLEANFUNCPATH, AUDIOAUGMENTFUNCPATH };

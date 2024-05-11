@@ -49,9 +49,16 @@ const routes = [
         component: () => import('pages/IndexPage.vue')
       },
       {
+        // 这是图像清洗、增广后的结果管理界面的url，由于当时编写的时候没想过单独摘出来作为一个path
+        // 后续考虑把它拿出来，作为单独的url路径，不放在data-augment下面
         path: 'augment-result',
         name: 'augmentResult',
         component: () => import ('pages/data-augment/augment-result/index.vue')
+      },
+      {
+        path: 'audio-augment-result',
+        name: 'audioAugmentResult',
+        component: () => import ('pages/data-augment/audio-augment-result/index.vue')
       }
     ]
   },

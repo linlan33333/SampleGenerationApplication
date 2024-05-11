@@ -32,8 +32,6 @@ export default {
   setup() {
     const emit = getCurrentInstance().emit;
 
-    const showDisplayPart = ref(false);
-
     return {
       // 设置侧边滚动条样式的，理论上不应该写在这里中，后期要改
       thumbStyle: ref({

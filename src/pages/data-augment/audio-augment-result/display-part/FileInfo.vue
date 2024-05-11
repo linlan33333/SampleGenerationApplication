@@ -1,5 +1,9 @@
 <template>
   <div class="column full-height justify-around q-pl-md q-pr-md">
+    <div class="full-width flex flex-center">
+      <div class="full-width full-height" id="waveform888" />
+    </div>
+
     <div class="full-width q-pt-md">
       <q-card flat>
         <q-list>
@@ -37,26 +41,54 @@
 
     <div class="column q-pt-md">
       <div>
-        <q-btn class="full-width q-dark" flat label="预览" @click="openIPDialog" />
+        <q-btn class="full-width q-dark" flat label="预览" @click="openAPDialog = true;" />
       </div>
 
       <div class="q-pt-sm">
         <q-btn class="full-width q-dark" flat label="保存" @click="saveFile" />
       </div>
 
-<!--   这里另存为应当能让用户自己选择存储路径   -->
+      <!--   这里另存为应当能让用户自己选择存储路径   -->
       <div class="q-pt-sm">
         <q-btn class="full-width q-dark" flat label="另存为" @click="saveAs" />
       </div>
     </div>
   </div>
+
+  <q-dialog class="full-width" v-model="openAPDialog" persistent>
+
+    <q-card flat class="full-width">
+      <q-card-section>
+        <div class="text-h6">音频预览</div>
+      </q-card-section>
+
+      <q-card-section>
+        <div class="full-width flex flex-center">
+          <div class="full-width full-height" id="waveform888" />
+        </div>
+      </q-card-section>
+
+      <q-card-actions align="center">
+        <div class="row justify-evenly col-4">
+          <q-btn round flat class="self-center" size="lg" padding="xs xs" icon="replay_5" @click="replayFiveSeconds" />
+          <q-btn round size="xl" padding="xs xs" icon="play_circle" @click="playPause" />
+          <q-btn round flat class="self-center" size="lg" padding="xs xs" icon="forward_5" @click="forwardFiveSecond"/>
+        </div>
+      </q-card-actions>
+
+      <q-card-actions align="right">
+        <q-btn flat label="关闭" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
-import {onBeforeUnmount, onMounted, ref} from "vue";
+import {onBeforeUnmount, onMounted, ref, watch} from "vue";
 import bus from "src/utils/bus";
 import { useQuasar } from "quasar";
 import fs from "fs";
+import WaveSurfer from "wavesurfer.js";
 
 export default {
   name: 'FileInfo',
@@ -64,7 +96,9 @@ export default {
   setup() {
     const fileInfo = ref(null);
     const fileSize = ref(null);
+    const openAPDialog = ref(false);
 
+    const wavesurfer = ref(null);
     const fs = require('fs');
     const { dialog } = require('@electron/remote');
     const $q = useQuasar();
@@ -94,13 +128,27 @@ export default {
       bus.off("selectedFileInfo");
     });
 
+    watch(() => fileInfo.value, () => {
+      if (wavesurfer.value) {
+        wavesurfer.value = null;
+      }
+
+      wavesurfer.value = WaveSurfer.create({
+        container: '#waveform888',
+        autoCenter: false
+      })
+
+      wavesurfer.value.load(fileInfo.value.fileCurrentUrl);
+    })
+
     return {
       fileInfo,
       fileSize,
+      openAPDialog,
 
-      openIPDialog() {
-        bus.emit('openImagePreviewDialog', fileInfo.value.fileCurrentUrl);
-      },
+      // openAPDialog() {
+      //   openAPDialog.value = true;
+      // },
 
       saveFile() {
         if (fileInfo.value !== null) {
@@ -167,6 +215,21 @@ export default {
             type: "negative"
           });
         })
+      },
+
+      // 后退5秒
+      replayFiveSeconds() {
+        wavesurfer.value.skip(-5);
+      },
+
+      // 前进5秒
+      forwardFiveSecond() {
+        wavesurfer.value.skip(5);
+      },
+
+      // 若音乐播放则暂停，否则开始播放
+      playPause() {
+        wavesurfer.value.playPause();
       }
     }
   }

@@ -48,7 +48,7 @@
         <q-btn class="full-width q-dark" flat label="播放" @click="openPlayAudioDialog" />
       </div>
 
-      <div>
+      <div class="q-pt-sm">
         <q-btn class="full-width q-dark" flat label="移动文件" @click="openRemoveAudioDialog" />
       </div>
 
@@ -90,12 +90,24 @@
   </q-dialog>
 
   <q-dialog v-model="playAudioDialogOpen" persistent>
+    <q-card flat class="full-width">
+      <q-card-actions align="center">
+        <div class="row justify-evenly col-4">
+          <q-btn round flat class="self-center" size="lg" padding="xs xs" icon="replay_5" @click="replayFiveSeconds" />
+          <q-btn round size="xl" padding="xs xs" icon="play_circle" @click="playPause" />
+          <q-btn round flat class="self-center" size="lg" padding="xs xs" icon="forward_5" @click="forwardFiveSecond"/>
+        </div>
+      </q-card-actions>
 
+      <q-card-actions align="right">
+        <q-btn flat @click="closeAudioPlayDialog">关闭</q-btn>
+      </q-card-actions>
+    </q-card>
   </q-dialog>
 </template>
 
 <script>
-import {ref, getCurrentInstance, watch, onMounted, onBeforeUnmount} from 'vue';
+import {ref, getCurrentInstance, watch, onMounted, onBeforeUnmount, computed} from 'vue';
 import { toRaw } from '@vue/reactivity';
 import {AUDIOFOLDERPATH, FOLDERPATH} from "src/utils/global-args";
 import WaveSurfer from "wavesurfer.js";
@@ -113,7 +125,7 @@ export default {
     const audioName = ref(null);
     const audioFolder = ref(null);
     const selectedAudioFolderName = ref(null);
-    const audioTimeLength = ref(null);
+    const audioTimeLength = ref(null);    // 音频的持续时间，但是加了"s"单位
     const audioFileSize = ref("");
     const audioFolderNames = ref([]);
     const selectNewFolderName = ref(null);   // 移动文件的新文件夹名称
@@ -193,7 +205,6 @@ export default {
       newAudioName,                // 图片重命名后的名称
       playAudioDialogOpen,
 
-
       // 取消移动文件
       closeRemoveAudioDialog() {
         selectNewFolderName.value = null;
@@ -243,7 +254,7 @@ export default {
       },
 
       openPlayAudioDialog() {
-
+        playAudioDialogOpen.value = true;
       },
 
       closeRenameAudioDialog() {
@@ -276,6 +287,26 @@ export default {
 
         fs.unlinkSync(audioUrl.value);
         bus.emit("deleteAudioDate", deletedAudioInfo);
+      },
+
+      // 后退5秒
+      replayFiveSeconds() {
+        wavesurfer.value.skip(-5);
+      },
+
+      // 前进5秒
+      forwardFiveSecond() {
+        wavesurfer.value.skip(5);
+      },
+
+      // 若音乐播放则暂停，否则开始播放
+      playPause() {
+        wavesurfer.value.playPause();
+      },
+
+      closeAudioPlayDialog() {
+        playAudioDialogOpen.value = false;
+        wavesurfer.value.pause();
       }
     }
   },

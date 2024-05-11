@@ -223,6 +223,14 @@ export default {
     // Pix2Pix模型的名称
     const Pix2PixName = ref(null);
 
+    const notifyError = (msg) => {
+      $q.notify({
+        message: msg,
+        position: "top",
+        type: "negative"
+      })
+    };
+
     return {
       imageRotateFunc,
       imageCropFunc,
@@ -253,18 +261,10 @@ export default {
       cycleGANName,
       Pix2PixName,
 
-      notifyError(msg) {
-        $q.notify({
-          message: msg,
-          position: "top",
-          type: "negative"
-        })
-      },
-
       // 图像翻转
       imageRotate() {
         if (angle.value === null) {
-          this.notifyError("参数设置不全");
+          notifyError("参数设置不全");
           return;
         }
         const params = [PYFUNCTESTPATH + 'imageRotate.py', '-input_folder', TEMPPATH, '-angle', angle.value, '-output_folder', TEMPPATH];
@@ -274,7 +274,7 @@ export default {
       // 图像剪裁
       imageCrop() {
         if (crop_height === null || crop_width === null) {
-          this.notifyError("参数设置不全");
+          notifyError("参数设置不全");
           return;
         }
         const params = [PYFUNCTESTPATH + 'imageCrop.py', '-input_folder', TEMPPATH, '-x', x.value, '-y', y.value,
@@ -284,12 +284,12 @@ export default {
 
       imageBrightness() {
         if (brightness.value < -255 || brightness.value > 255) {
-          this.notifyError("参数设置错误");
+          notifyError("参数设置错误");
           return;
         }
 
         if (brightness.value === null) {
-          this.notifyError("参数设置不全");
+          notifyError("参数设置不全");
           return;
         }
 
@@ -300,12 +300,12 @@ export default {
 
       imageSaturation() {
         if (saturation.value < -255 || saturation.value > 255) {
-          this.notifyError("参数设置错误");
+          notifyError("参数设置错误");
           return;
         }
 
         if (saturation.value === null) {
-          this.notifyError("参数设置不全");
+          notifyError("参数设置不全");
           return;
         }
 
@@ -316,7 +316,7 @@ export default {
 
       imageBlur() {
         if (blur_type === null) {
-          this.notifyError("参数设置不全");
+          notifyError("参数设置不全");
           return;
         }
 
@@ -327,10 +327,10 @@ export default {
 
       imageElastic() {
         if (elastic_alpha.value < 100 || elastic_alpha.value > 500 || elastic_sigma.value < 5 || elastic_sigma.value > 20) {
-          this.notifyError("参数设置不合理");
+          notifyError("参数设置不合理");
         }
         else if (elastic_alpha.value === null || elastic_sigma.value === null) {
-          this.notifyError("参数设置不全");
+          notifyError("参数设置不全");
         }
 
         const params = [PYFUNCTESTPATH + 'imageElastic.py', '-input_folder', TEMPPATH,
@@ -340,11 +340,11 @@ export default {
 
       imageGrid() {
         if (intensity.value < 5 || intensity.value > 50 || grid_num.value < 25 || grid_num.value > 250) {
-          this.notifyError("参数设置不合理");
+          notifyError("参数设置不合理");
           return;
         }
         if (intensity.value === null || grid_num.value === null) {
-          this.notifyError("参数设置不全");
+          notifyError("参数设置不全");
         }
 
         let grid_size = Math.sqrt(grid_num.value);
@@ -357,7 +357,7 @@ export default {
 
       cycleGANRun() {
         if (cycleGANName.value === null) {
-          this.notifyError("参数设置不全");
+          notifyError("参数设置不全");
           return;
         }
         const params = [PYFUNCTESTPATH + 'imageCycleGAN.py', '--dataroot', TEMPPATH,
@@ -367,7 +367,7 @@ export default {
 
       Pix2PixRun() {
         if (Pix2PixName.value === null) {
-          this.notifyError("参数设置不全");
+          notifyError("参数设置不全");
           return;
         }
         const params = [PYFUNCTESTPATH + 'imagePix2Pix.py', '--dataroot', TEMPPATH, '--name', 'day2night',
