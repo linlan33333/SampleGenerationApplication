@@ -30,8 +30,6 @@
                  step="0.001" min="0" max="10" :rules="[val => val >= 0 && val <= 10]" />
         <q-input outlined dense color="grey-14" placeholder="请输入最大振幅" type="number" v-model="max_amp"
                  step="0.001" min="0" max="10" :rules="[val => val >= 0.0 && val <= 10]" />
-        <q-input outlined dense color="grey-14" placeholder="请输入转换概率" type="number" v-model="possible"
-                 step="0.1" min="0" max="10" :rules="[val => val >= 0.0 && val <= 1.0]" />
       </q-card-section>
 
       <q-card-actions align="evenly">
@@ -209,7 +207,6 @@ export default {
     // 高斯噪声相关参数
     const min_amp = ref(0.001);
     const max_amp = ref(0.015);
-    const possible = ref(null);
 
     const audioShiftFunc = ref(false);
     const min_fraction = ref(-0.5);
@@ -261,7 +258,6 @@ export default {
       addGaussianNoiseFunc,
       min_amp,
       max_amp,
-      possible,
 
       audioShiftFunc,
       min_fraction,
@@ -314,8 +310,7 @@ export default {
 
       addGaussianNoise() {
         if (min_amp.value < 0 || min_amp.value > 10
-          || max_amp.value < 0 || max_amp.value > 10
-          || possible.value < 0 || possible.value > 1) {
+          || max_amp.value < 0 || max_amp.value > 1) {
           notifyError("参数设置错误");
           return;
         }
@@ -325,7 +320,7 @@ export default {
           return;
         }
 
-        const params = [AUDIOAUGMENTFUNCPATH + "add-gaussian-noise.py", "--min_amp", min_amp.value, "--max_amp", max_amp.value, "--p", possible.value,
+        const params = [AUDIOAUGMENTFUNCPATH + "add-gaussian-noise.py", "--min_amp", min_amp.value, "--max_amp", max_amp.value, "--p", 1.0,
                         "--input_folder", TEMPPATH, "--output_folder", TEMPPATH];
         bus.emit('audioAugment', params);
 
