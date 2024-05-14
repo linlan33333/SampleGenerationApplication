@@ -130,7 +130,7 @@ export default {
 
     watch(() => fileInfo.value, () => {
       if (wavesurfer.value) {
-        wavesurfer.value = null;
+        wavesurfer.value.destroy();
       }
 
       wavesurfer.value = WaveSurfer.create({
