@@ -1,5 +1,5 @@
 <template>
-  <q-list class="full-width" v-for="(folder, listIndex) in imgFolder"
+  <q-list class="full-width" v-for="(folder, listIndex) in audioFolder"
           :key="listIndex">
     <q-expansion-item
       switch-toggle-side
@@ -30,20 +30,18 @@
       <q-card flat>
         <q-card-section>
           <div class="image-container flex wrap justify-start q-gutter-sm">
-            <q-item v-for="(imgUrl, index) in folder.imgUrls" :key="index"
+            <q-item v-for="(audioUrl, index) in folder.audioUrls" :key="index"
                     class="image-item column">
               <q-item-section class="full-width">
-                <q-img :src="imgUrl"
+                <q-img src="~assets/audio.webp"
                        class="rounded-borders clickable-img"
                        ratio="1" >
-<!--                  <q-checkbox v-show="folder.showCheckbox" class="absolute-top-left all-pointer-events"-->
-<!--                              v-model="selectedImages" :val="imgUrl" color="orange" size="xs" />-->
                   <q-checkbox v-show="folder.showCheckbox" class="all-pointer-events"
-                              v-model="selectedImages" :val="imgUrl" color="orange" size="sm" />
+                              v-model="selectedAudios" :val="audioUrl" color="orange" size="sm" />
                 </q-img>
               </q-item-section>
               <q-item-label class="self-center q-pt-sm col-auto" lines="1">
-                {{imgUrl.split('/').pop()}}
+                {{audioUrl.split('/').pop()}}
               </q-item-label>
             </q-item>
           </div>
@@ -54,14 +52,14 @@
 </template>
 
 <script>
-import { ref, onMounted, getCurrentInstance, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from "vue-router";
 import bus from "src/utils/bus";
 import { useQuasar } from "quasar";
-import { PYTESTIMAGEPATH, TEMPPATH, SGAImageEnvPath } from "src/utils/global-args";
+import {TEMPPATH, SGAAudioEnvPath, AUDIOFOLDERPATH} from "src/utils/global-args";
 
 export default {
-  name: "ImageList",
+  name: "AudioList",
 
   setup() {
     const fs = require('fs');
@@ -69,45 +67,45 @@ export default {
     const $q = useQuasar();
     const router = useRouter();
 
-    const imgFolder = ref([]);      // 工作目录下的所有文件夹以及里面的图片信息都会存放到这里
-    const urlTemp = ref(PYTESTIMAGEPATH);
-    const selectedImages = ref([]);   // 被选中需要修改的图片文件
+    const audioFolder = ref([]);      // 工作目录下的所有文件夹以及里面的图片信息都会存放到这里
+    const urlTemp = ref(AUDIOFOLDERPATH);
+    const selectedAudios = ref([]);   // 被选中需要修改的图片文件
 
     // 这里假设本软件管理的图片文件夹的路径在这个文件夹中，这里将用户的所有图片文件夹读出来并展示在前端
     onMounted( () => {
-      fs.readdir(PYTESTIMAGEPATH, (err, dirs) => {
+      fs.readdir(AUDIOFOLDERPATH, (err, dirs) => {
         if (err) {
           console.log("读取目录失败：", err);
           return;
         }
 
         for (let dir of dirs) {
-          // 定义一个临时变量，等把当前文件夹中的图片的url都存放好后再添加进imgFolder
+          // 定义一个临时变量，等把当前文件夹中的图片的url都存放好后再添加进audioFolder
           let temp = {
             dirName: dir,
             expanded: false,
-            imgUrls: [],
+            audioUrls: [],
             showCheckbox: false // 控制多选框显示与隐藏的状态
           }
 
-          fs.readdir(PYTESTIMAGEPATH + '/' + dir, (err, files) => {
+          fs.readdir(AUDIOFOLDERPATH + dir, (err, files) => {
             if (err) {
               console.log("读取图片文件失败：", err);
               return;
             }
 
             for (let file of files) {
-              temp.imgUrls.push(urlTemp.value + dir + '/' + file);
+              temp.audioUrls.push(urlTemp.value + dir + '/' + file);
             }
           })
 
-          imgFolder.value.push(temp);
+          audioFolder.value.push(temp);
         }
       });
     })
 
     onMounted(() => {
-      bus.on('imageAugment', params => {
+      bus.on('audioClean', params => {
         const notif = $q.notify({
           group: false,
           timeout: 0,   // 一直显示
@@ -115,15 +113,15 @@ export default {
           message: '处理中，请勿执行其他操作...',
         })
         // 先将选中的图片全部拷贝到temp文件夹下
-        for (let imgUrl of selectedImages.value) {
+        for (let audioUrl of selectedAudios.value) {
           // 先给图片名称起名，将原图片的路径作为新图片的名称，以此保留原图片的信息
-          let newName = imgUrl.replace(/\//g, '^');   // 将原图片路径的\替换成#，不然无法作为文件名
+          let newName = audioUrl.replace(/\//g, '^');   // 将原图片路径的\替换成#，不然无法作为文件名
           newName = newName.replace(':', '@');        // 将原图片路径的:替换成@，不然无法作为文件名
-          let newImgUrl = TEMPPATH + newName;
-          fs.copyFileSync(imgUrl, newImgUrl);
+          let newAudioUrl = TEMPPATH + newName;
+          fs.copyFileSync(audioUrl, newAudioUrl);
         }
 
-        const py = spawn(SGAImageEnvPath, params);
+        const py = spawn(SGAAudioEnvPath, params);
         console.log(params);
 
         // 界面跳转
@@ -135,7 +133,7 @@ export default {
             message: '文件处理已完成',
             timeout: 2000 // 2秒后该提示框自动消失
           })
-          router.push('/data-augment/augment-result');
+          router.push('/data-augment/audio-augment-result');
         })
 
         py.stderr.on('data', err => {
@@ -145,7 +143,6 @@ export default {
             message: '文件处理失败，请重试',
             timeout: 2000 // 2秒后该提示框自动消失
           })
-
           const decoder = new TextDecoder('utf-8');
           const utf8String = decoder.decode(err);
           console.log(utf8String);
@@ -153,23 +150,23 @@ export default {
       })
 
       bus.on('cancelSelect', () => {
-        selectedImages.value = [];
+        selectedAudios.value = [];
       })
     })
 
     onBeforeUnmount(() => {
-      bus.off('imageAugment');
+      bus.off('audioClean');
       bus.off('cancelSelect');
     })
 
     return {
-      imgFolder,
+      audioFolder,
       urlTemp,
-      selectedImages,
+      selectedAudios,
 
       selectFiles(listIndex) {
         // 将当前列表项的多选框显示状态设置为true，其他列表项的多选框隐藏
-        imgFolder.value.forEach((folder, index) => {
+        audioFolder.value.forEach((folder, index) => {
           if (index === listIndex) {
             folder.showCheckbox = true;
           }
@@ -178,12 +175,12 @@ export default {
 
       selectFolders(listIndex) {
         // 将当前列表项的多选框显示状态设置为true，其他列表项的多选框隐藏
-        imgFolder.value.forEach((folder, index) => {
+        audioFolder.value.forEach((folder, index) => {
           if (index === listIndex) {
             folder.showCheckbox = true;
-            for (let item of folder.imgUrls) {
-              if (!selectedImages.value.includes(item)) {
-                selectedImages.value.push(item);
+            for (let item of folder.audioUrls) {
+              if (!selectedAudios.value.includes(item)) {
+                selectedAudios.value.push(item);
               }
             }
           }

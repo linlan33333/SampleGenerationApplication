@@ -75,7 +75,7 @@ const routes = [
       {
         path: 'audio-clean',
         name: 'audioClean',
-        component: () => import('pages/IndexPage.vue')
+        component: () => import('pages/data-clean/audio-clean/index.vue')
       },
       {
         path: 'text-clean',
