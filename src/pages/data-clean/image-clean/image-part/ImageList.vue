@@ -145,7 +145,9 @@ export default {
             message: '文件处理失败，请重试',
             timeout: 2000 // 2秒后该提示框自动消失
           })
-          console.log(err);
+          const decoder = new TextDecoder('utf-8');
+          const utf8String = decoder.decode(err);
+          console.log(utf8String);
         })
       })
 

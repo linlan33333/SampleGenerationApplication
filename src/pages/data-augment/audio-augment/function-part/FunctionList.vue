@@ -178,6 +178,26 @@
     </q-card>
   </q-expansion-item>
 
+  <q-expansion-item
+    switch-toggle-side
+    label="MetricGAN"
+    v-model="clipDistortionFunc"
+  >
+    <q-card>
+      <q-card-section>
+        <q-input outlined dense color="grey-14" placeholder="请输入最小百分位阈值" type="number" v-model="min_percentile_threshold"
+                 step="1" min="0" :rules="[val => val >= 0 && val < 100]" />
+        <q-input outlined dense color="grey-14" placeholder="请输入最大中心频率" type="number" v-model="max_percentile_threshold"
+                 step="1" min="0" :rules="[val => val >= 0 && val < 100]" />
+      </q-card-section>
+
+      <q-card-actions align="evenly">
+        <q-btn flat @click="clipDistortion">应用</q-btn>
+        <q-btn flat @click="(min_percentile_threshold = 0) && (max_percentile_threshold = 40)">取消</q-btn>
+      </q-card-actions>
+    </q-card>
+  </q-expansion-item>
+
   <div class="column q-pt-md q-pl-md q-pr-md">
     <div class="q-pt-sm">
       <q-btn class="full-width q-dark" flat label="清空选择" @click="cancelSelect" />
@@ -210,7 +230,7 @@ export default {
 
     const audioShiftFunc = ref(false);
     const min_fraction = ref(-0.5);
-    const max_fraction = ref(-0.5);
+    const max_fraction = ref(0.5);
 
     const addShortNoiseFunc = ref(false);
     const shortNoiseFile = ref(null);
