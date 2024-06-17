@@ -1,12 +1,12 @@
-const FOLDERPATH = "E:/programing/QuasarDemo/SampleGenerationApp/imgFolder/";
-// const FOLDERPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/imgFolder/";
+// const FOLDERPATH = "E:/programing/QuasarDemo/SampleGenerationApp/imgFolder/";
+const FOLDERPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/imgFolder/";
 
-// const AUDIOFOLDERPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/audioFolder/";
-const AUDIOFOLDERPATH = "E:/programing/QuasarDemo/SampleGenerationApp/audioFolder/";
+const AUDIOFOLDERPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/audioFolder/";
+// const AUDIOFOLDERPATH = "E:/programing/QuasarDemo/SampleGenerationApp/audioFolder/";
 
 // 处理图片、文本、音频文件时将其存放在临时文件夹下处理，该文件夹即是这个作用
-const TEMPPATH = "E:/programing/QuasarDemo/SampleGenerationApp/temp/";
-// const TEMPPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/temp/";
+// const TEMPPATH = "E:/programing/QuasarDemo/SampleGenerationApp/temp/";
+const TEMPPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/temp/";
 
 // const PYTESTIMAGEPATH = "E:/programing/QuasarDemo/SampleGenerationApp/imgFolder/ImageTest/";
 const PYTESTIMAGEPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/imgFolder/ImageTest/";
@@ -33,4 +33,4 @@ const SGAImageEnvPath = 'D:/Anaconda/envs/SGAImage/python';
 const SGAAudioEnvPath = 'D:/Anaconda/envs/SGAAudio/python';
 
 export { FOLDERPATH, PYTESTIMAGEPATH, PYFUNCTESTPATH, TEMPPATH, anacondaEnvPath, SGAImageEnvPath,
-         IMAGECLEANFUNCPATH, AUDIOFOLDERPATH, SGAAudioEnvPath, AUDIOCLEANFUNCPATH, AUDIOAUGMENTFUNCPATH };
+  IMAGECLEANFUNCPATH, AUDIOFOLDERPATH, SGAAudioEnvPath, AUDIOCLEANFUNCPATH, AUDIOAUGMENTFUNCPATH };
