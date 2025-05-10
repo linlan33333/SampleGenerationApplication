@@ -9,35 +9,36 @@
 </template>
 
 <script>
+
 import {ref, onMounted} from 'vue';
-import ManagementPart from "pages/data-management/audio-management/management-part/index.vue";
-import DisplayPart from "pages/data-management/audio-management/display-part/index.vue";
+import ManagementPart from "pages/data-management/text-management/management-part/index.vue";
+import DisplayPart from "pages/data-management/text-management/display-part/index.vue";
 import bus from "src/utils/bus";
 
 export default {
-  name: "AudioManagement",
+  name: "TextManagement",
 
   components: {
-    ManagementPart,
     DisplayPart,
+    ManagementPart
   },
 
   setup() {
     const show = ref(false);
 
     onMounted(() => {
-      bus.on('selectedAudioUrl', params => {
+      bus.on('selectedTextUrl', params => {
         show.value = true;
       })
     })
 
     return {
-      show
+      show,
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="sass">
 
 </style>

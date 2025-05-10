@@ -1,14 +1,14 @@
 <template>
   <q-toolbar inset>
     <q-toolbar-title>
-      音频增广
+      文本清洗
     </q-toolbar-title>
   </q-toolbar>
 </template>
 
 <script>
 export default {
-  name: "AudioAugToolBar",
+  name: "TextCleanToolBar",
 
   setup() {
 
@@ -16,6 +16,6 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
-//48, 49, 52
+<style scoped>
+
 </style>

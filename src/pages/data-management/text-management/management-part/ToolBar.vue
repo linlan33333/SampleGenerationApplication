@@ -29,7 +29,7 @@
       </q-card>
     </q-dialog>
 
-    <q-input dense outlined bg-color="grey-9" v-model="audioName" class="q-ml-md">
+    <q-input dense outlined bg-color="grey-9" v-model="textName" class="q-ml-md">
       <template v-slot:prepend>
         <q-icon name="search" />
       </template>
@@ -40,7 +40,7 @@
 <script>
 import { ref, getCurrentInstance, watch } from 'vue';
 import { useQuasar } from 'quasar';
-import { AUDIOFOLDERPATH } from "src/utils/global-args";
+import { TEXTFOLDERPATH } from "src/utils/global-args";
 
 export default {
   name: "ToolBar",
@@ -53,22 +53,22 @@ export default {
 
     const text = ref("");
     const folderName = ref("");
-    const audioName = ref('');
+    const textName = ref('');
     const folderNameDOpen = ref(false);
     const selectedFolderPath = ref("");
 
-    watch(audioName, () => {
-      emit("searchAudioName", audioName.value);
+    watch(textName, () => {
+      emit("searchTextName", textName.value);
     });
 
     return {
       text,
       folderName,
       folderNameDOpen,
-      audioName,
+      textName,
 
       createFolder() {
-        fs.mkdir(AUDIOFOLDERPATH + folderName.value, err => {
+        fs.mkdir(TEXTFOLDERPATH + folderName.value, err => {
           if (err) {
             console.log(err);
             $q.notify({

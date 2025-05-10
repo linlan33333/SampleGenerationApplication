@@ -4,6 +4,8 @@ const FOLDERPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/imgFolder
 const AUDIOFOLDERPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/audioFolder/";
 // const AUDIOFOLDERPATH = "E:/programing/QuasarDemo/SampleGenerationApp/audioFolder/";
 
+const TEXTFOLDERPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/textFolder/";
+
 // 处理图片、文本、音频文件时将其存放在临时文件夹下处理，该文件夹即是这个作用
 // const TEMPPATH = "E:/programing/QuasarDemo/SampleGenerationApp/temp/";
 const TEMPPATH = "D:/AAAAA/programing/QuasarDemo/SampleGenerationApp/temp/";
@@ -26,11 +28,16 @@ const AUDIOCLEANFUNCPATH = "D:/AAAAA/文件/项目/智能应用增量样本生�
 const AUDIOAUGMENTFUNCPATH = "D:/AAAAA/文件/项目/智能应用增量样本生成软件/算法与说明/audio-augmentation/";
 // const AUDIOAUGMENTFUNCPATH = "E:/文件/项目/智能应用增量样本生成软件/audio-augmentation/";
 
+// 文本数据增广函数路径
+const TEXTAUGMENTFUNCPATH = "D:/AAAAA/文件/项目/智能应用增量样本生成软件/算法与说明/TextAugment/";
+
 // anaconda环境中的python脚本
 const anacondaEnvPath = 'D:/Anaconda/envs/pytorch/python';
 // anaconda环境中专为图像处理安装的环境
 const SGAImageEnvPath = 'D:/Anaconda/envs/SGAImage/python';
 const SGAAudioEnvPath = 'D:/Anaconda/envs/SGAAudio/python';
+const SGATextEnvPath = 'D:/Anaconda/envs/SGAText/python';
 
 export { FOLDERPATH, PYTESTIMAGEPATH, PYFUNCTESTPATH, TEMPPATH, anacondaEnvPath, SGAImageEnvPath,
-  IMAGECLEANFUNCPATH, AUDIOFOLDERPATH, SGAAudioEnvPath, AUDIOCLEANFUNCPATH, AUDIOAUGMENTFUNCPATH };
+  IMAGECLEANFUNCPATH, AUDIOFOLDERPATH, SGAAudioEnvPath, AUDIOCLEANFUNCPATH, AUDIOAUGMENTFUNCPATH,
+  TEXTFOLDERPATH, TEXTAUGMENTFUNCPATH, SGATextEnvPath };

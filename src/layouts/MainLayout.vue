@@ -78,7 +78,7 @@
 
           <q-item clickable
                   v-ripple="{ color: 'grey'}"
-                  :active="this.$route.name === 'augmentResult'"
+                  :active="this.$route.name === 'audioClean'"
                   active-class="my-menu-link"
                   class="q-mt-sm"
                   to="/data-clean/audio-clean">
@@ -93,7 +93,7 @@
 
           <q-item clickable
                   v-ripple="{ color: 'grey'}"
-                  :active="this.$route.name === 'textAugment'"
+                  :active="this.$route.name === 'textClean'"
                   active-class="my-menu-link"
                   class="q-mt-sm"
                   to="/data-clean/text-clean">

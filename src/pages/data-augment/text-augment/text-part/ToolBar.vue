@@ -1,14 +1,14 @@
 <template>
   <q-toolbar inset>
     <q-toolbar-title>
-      音频增广
+      文本增广
     </q-toolbar-title>
   </q-toolbar>
 </template>
 
 <script>
 export default {
-  name: "AudioAugToolBar",
+  name: "TextAugToolBar",
 
   setup() {
 

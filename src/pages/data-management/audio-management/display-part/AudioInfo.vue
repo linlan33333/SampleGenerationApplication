@@ -79,7 +79,7 @@
   <q-dialog v-model="renameAudioDialogOpen" persistent>
     <q-card flat class="full-width">
       <q-card-section class="q-pt-lg">
-        <q-input dense outlined v-model="newAudioName" placeholder="请输入文件夹名称" />
+        <q-input dense outlined v-model="newAudioName" placeholder="请输入文件名称" />
       </q-card-section>
 
       <q-card-actions align="right">

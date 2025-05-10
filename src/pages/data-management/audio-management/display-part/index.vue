@@ -12,8 +12,8 @@
 
 <script>
 
-import ToolBar from "pages/data-management/audio-management/diaplay-part/ToolBar.vue";
-import AudioInfo from "pages/data-management/audio-management/diaplay-part/AudioInfo.vue";
+import ToolBar from "pages/data-management/audio-management/display-part/ToolBar.vue";
+import AudioInfo from "pages/data-management/audio-management/display-part/AudioInfo.vue";
 
 export default {
   name: "DisplayPart",
